@@ -72,7 +72,7 @@ func init() {
 	RootCmd.PersistentFlags().BoolVar(&noRemediations, "noremediations", false, "Disable printing of remediations section")
 	RootCmd.Flags().StringVarP(&dockerVersion, "version", "", "17.06", "Specify Docker version, automatically detected if unset")
 	RootCmd.Flags().StringVarP(&cfgDir, "config-dir", "D", "cfg", "directory to get benchmark definitions")
-	RootCmd.PersistentFlags().BoolVar(&jsonFmt, "json", false, "Prints the results as JSON")
+	RootCmd.PersistentFlags().BoolVar(&jsonFmt, "json", true, "Prints the results as JSON")
 	RootCmd.PersistentFlags().StringVarP(
 		&checkList,
 		"check",
