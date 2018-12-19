@@ -56,7 +56,7 @@ func outputResults(controls *check.Controls, summary check.Summary) (error) {
 			return err
 		}
 		//输出执行结果
-		fmt.Println(string(out))
+		//fmt.Println(string(out))
 
 		//发送到api接口
 		uuidstr:=GetUUID(cfg.CFGPATH)
