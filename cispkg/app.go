@@ -11,9 +11,10 @@ import (
 	"github.com/aquasecurity/bench-common/util"
 	"github.com/golang/glog"
 	"github.com/spf13/cobra"
+	"github.com/MXi4oyu/docker-bench/cfg"
 )
 
-func app(cmd *cobra.Command, args []string) {
+func app(cmd *cobra.Command, args []string){
 	var version string
 	var err error
 
@@ -40,13 +41,13 @@ func app(cmd *cobra.Command, args []string) {
 	}
 
 	summary := runControls(controls, checkList)
-	err = outputResults(controls, summary)
+	err= outputResults(controls, summary)
 	if err != nil {
 		util.ExitWithError(err)
 	}
 }
 
-func outputResults(controls *check.Controls, summary check.Summary) error {
+func outputResults(controls *check.Controls, summary check.Summary) (error) {
 	// if we successfully ran some tests and it's json format, ignore the warnings
 	if (summary.Fail > 0 || summary.Warn > 0 || summary.Pass > 0) && jsonFmt {
 		out, err := controls.JSON()
@@ -54,7 +55,14 @@ func outputResults(controls *check.Controls, summary check.Summary) error {
 			// util.ExitWithError(fmt.Errorf("failed to output in JSON format: %v", err))
 			return err
 		}
+		//输出执行结果
 		fmt.Println(string(out))
+
+		//发送到api接口
+		uuidstr:=GetUUID(cfg.CFGPATH)
+		PostDataToApi(cfg.REMOTE_HOSTSCAN_UUIDAPI,uuidstr,string(out))
+
+
 	} else {
 		util.PrettyPrint(controls, summary, noRemediations)
 	}
