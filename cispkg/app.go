@@ -59,8 +59,16 @@ func outputResults(controls *check.Controls, summary check.Summary) (error) {
 		//fmt.Println(string(out))
 
 		//发送到api接口
+
 		uuidstr:=GetUUID(cfg.CFGPATH)
-		PostDataToApi(cfg.REMOTE_HOSTSCAN_UUIDAPI,uuidstr,string(out))
+
+		REMOTE_HOSTSCAN_UUIDAPI:=os.Getenv("REMOTE_HOSTSCAN_UUIDAPI")
+		if REMOTE_HOSTSCAN_UUIDAPI==""{
+			PostDataToApi(cfg.REMOTE_HOSTSCAN_UUIDAPI,uuidstr,string(out))
+		}else{
+			PostDataToApi(REMOTE_HOSTSCAN_UUIDAPI,uuidstr,string(out))
+		}
+
 
 
 	} else {
